@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
 
@@ -29,13 +29,15 @@ jobs:
         uses: "phips28/gh-action-bump-version@master"
         with:
           tag-prefix: ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
 
-      - name: Push to protected branch
-        uses: CasperWA/push-protected@v2
-        with:
-          token: ${{ secrets.CI_TOKEN }}
-          branch: main
-          unprotect_reviews: true
+#      - name: Push to protected branch
+#        uses: CasperWA/push-protected@v2
+#        with:
+#          token: ${{ secrets.CI_TOKEN }}
+#          branch: main
+#          unprotect_reviews: true
 
 #      - name: Publish package
 #        run: npm publish
