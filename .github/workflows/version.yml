@@ -1,0 +1,47 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: Node.js Package
+
+on:
+  push:
+    branches:
+      - master
+
+#env:
+#  NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Bump package version
+        uses: "phips28/gh-action-bump-version@master"
+        with:
+          tag-prefix: ''
+
+      - name: Push to protected branch
+        uses: CasperWA/push-protected@v2
+        with:
+          token: ${{ secrets.CI_TOKEN }}
+          branch: main
+          unprotect_reviews: true
+
+#      - name: Publish package
+#        run: npm publish
+
+      #       Removed because committing to master not permitted, workaround not found
+      #      - name: "Automated Version Bump"
+      #        uses: "phips28/gh-action-bump-version@master"
+      #        with:
+      #          tag-prefix: ''
+      #        env:
+      #          NPM_TOKEN: ${{secrets.CI_TOKEN}}
