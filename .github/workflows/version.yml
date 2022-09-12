@@ -27,7 +27,7 @@ jobs:
 
       - name: Get previous tag
         id: latest-tag
-        uses: actions-ecosystem/action-get-latest-tag@v1
+        uses: WyriHaximus/github-action-get-previous-tag@v1
 
       - name: Reset version with previous tag
         uses: jossef/action-set-json-field@v2
