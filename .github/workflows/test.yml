@@ -25,7 +25,7 @@ jobs:
 
       - name: Get last publish version
         id: package_version
-        run: curl -s https://${TOKEN}@raw.githubusercontent.com/happywait/hw-lib-front.core.api/${BRANCH}/package.json
+        run: curl -s https://${TOKEN}@raw.githubusercontent.com/happywait/hw-lib-front.core.api/${BRANCH}/package.json | jq -r '.version'
         env:
           TOKEN: ${{ secrets.CI_TOKEN }}
           BRANCH: master
