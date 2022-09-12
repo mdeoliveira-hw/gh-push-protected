@@ -27,13 +27,13 @@ jobs:
         id: package_version
         run: |
           version="$(curl -s https://${TOKEN}@raw.githubusercontent.com/happywait/hw-lib-front.core.api/${BRANCH}/package.json | jq -r '.version')"
-          echo ::set-output name=current-version::version
+          echo ::set-output name=current-version::$(echo version)
         env:
           TOKEN: ${{ secrets.CI_TOKEN }}
           BRANCH: master
 
       - name: Echo current version
-        run: echo ${{ steps.package_version.outputs.current-version}}
+        run: echo ${{ steps.package_version.outputs.version}}
 #
 #      - name: Bump package version
 #        uses: "phips28/gh-action-bump-version@master"
