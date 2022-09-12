@@ -25,6 +25,32 @@ jobs:
         with:
           node-version: 16.x
 
+      - name: Get last version of master
+        id: master_version
+        run: |
+          echo ::set-output name=version::$(curl -s https://${TOKEN}@raw.githubusercontent.com/happywait/hw-lib-front.core.api/${BRANCH}/package.json | jq -r '.version')
+        env:
+          TOKEN: ${{ secrets.CI_TOKEN }}
+          BRANCH: master
+
+      - name: Get version of branch
+        id: branch_version
+        run: echo ::set-output name=version::$(cat package.json | jq -r '.version')
+
+      - name: Echo master version
+        run: echo ${{ steps.master_version.outputs.version }}
+
+      - name: Echo branch version
+        run: echo ${{ steps.branch_version.outputs.version }}
+
+      - name: Reset version
+        if: ${{ steps.branch_version.outputs.version != steps.master_version.outputs.version }}
+        uses: jossef/action-set-json-field@v2
+        with:
+          file: package.json
+          field: version
+          value: ${{ steps.master_version.outputs.version }}
+
       - name: Bump package version
         uses: "phips28/gh-action-bump-version@master"
         with:
