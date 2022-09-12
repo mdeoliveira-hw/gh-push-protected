@@ -25,10 +25,6 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Get previous tag
-        id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
-
       #      - name: Get last version of master
       #        id: master_version
       #        run: |
@@ -55,12 +51,16 @@ jobs:
       #          field: version
       #          value: ${{ steps.master_version.outputs.version }}
 
+      - name: Get previous tag
+        id: latest-tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+
       - name: Reset version with previous tag
         uses: jossef/action-set-json-field@v2
         with:
           file: package.json
           field: version
-          value: ${{ steps.previoustag.outputs.tag }}
+          value: ${{ steps.latest-tag.outputs.tag }}
 
       - name: Bump package version
         uses: "phips28/gh-action-bump-version@master"
