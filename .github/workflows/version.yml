@@ -4,15 +4,21 @@
 name: Node.js Package
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - main
+#  push:
+#    branches:
+#      - main
 
 #env:
 #  NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   publish-npm:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
