@@ -57,4 +57,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
 
       - name: Test ahead
-        run: git rev-list --count --left-right master...@{upstream}
+        run: git rev-list --count --left-right main...@{upstream}
