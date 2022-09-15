@@ -80,7 +80,7 @@ jobs:
       - name: Sleep for 30 seconds
         uses: jakejarvis/wait-action@master
         with:
-          time: '30s'
+          time: '3s'
 
       - name: Test ahead
         run: git rev-list --left-right main...@{upstream}
