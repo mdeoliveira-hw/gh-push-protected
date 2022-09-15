@@ -26,9 +26,13 @@ jobs:
 #    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
+      - name: Show ref
+        run: echo ${{ github.ref }}
+
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          ref: ${{ github.ref }}
           persist-credentials: false
           fetch-depth: 0
 
