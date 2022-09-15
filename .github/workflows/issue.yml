@@ -1,0 +1,29 @@
+name: Issue commit ahead
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Bump package version
+        uses: "phips28/gh-action-bump-version@master"
+        with:
+          target-branch: 'main'
+          tag-prefix: ''
+          commit-message: "CI: bumps version to {{version}} [skip ci]"
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
+
+      - name: Ahead commits
+        run: git rev-list --left-right main...@{upstream}

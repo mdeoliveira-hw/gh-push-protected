@@ -1,92 +1,92 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
-
-name: Node.js Package
-
-on:
-  push:
-    branches:
-      - main
-#  pull_request:
-#    types:
-#      - closed
-#    branches:
-#      - main
-  workflow_dispatch:
-
+## This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+## For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+#
+#name: Node.js Package
+#
+#on:
 #  push:
 #    branches:
 #      - main
-
-#env:
-#  NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-jobs:
-  publish-npm:
-#    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Show ref
-        run: echo ${{ github.ref }}
-
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
-          persist-credentials: false
-          fetch-depth: 0
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-
-      - name: Get previous tag
-        id: latest-tag
-        uses: WyriHaximus/github-action-get-previous-tag@v1
-
-      - name: Reset version with previous tag
-        uses: jossef/action-set-json-field@v2
-        with:
-          file: package.json
-          field: version
-          value: ${{ steps.latest-tag.outputs.tag }}
-
-      - name: Bump package version
-        uses: "phips28/gh-action-bump-version@master"
-        with:
-          tag-prefix: ''
-          commit-message: "CI: bumps version to {{version}} [skip ci]"
-        env:
-          GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
-
-      - name: current has
-        run: git rev-parse HEAD
-
-      - name: Test ahead
-        run: git rev-list --left-right main...@{upstream}
-
-      - name: Print log
-        run: git log -2
-
-#      - name: fetch
-#        run: git fetch
-
-#      - name: update git
-#        run: |
-#          git reset --hard HEAD
-#          git pull
-
-      - name: Sleep for 30 seconds
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '30s'
-
-      - name: Test ahead
-        run: git rev-list --left-right main...@{upstream}
-
-      - name: Print log
-        run: git log -2
-
-      - name: current has
-        run: git rev-parse HEAD
+##  pull_request:
+##    types:
+##      - closed
+##    branches:
+##      - main
+#  workflow_dispatch:
+#
+##  push:
+##    branches:
+##      - main
+#
+##env:
+##  NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#jobs:
+#  publish-npm:
+##    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Show ref
+#        run: echo ${{ github.ref }}
+#
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#        with:
+#          ref: ${{ github.ref }}
+#          persist-credentials: false
+#          fetch-depth: 0
+#
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: 16.x
+#
+#      - name: Get previous tag
+#        id: latest-tag
+#        uses: WyriHaximus/github-action-get-previous-tag@v1
+#
+#      - name: Reset version with previous tag
+#        uses: jossef/action-set-json-field@v2
+#        with:
+#          file: package.json
+#          field: version
+#          value: ${{ steps.latest-tag.outputs.tag }}
+#
+#      - name: Bump package version
+#        uses: "phips28/gh-action-bump-version@master"
+#        with:
+#          tag-prefix: ''
+#          commit-message: "CI: bumps version to {{version}} [skip ci]"
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
+#
+#      - name: current has
+#        run: git rev-parse HEAD
+#
+#      - name: Test ahead
+#        run: git rev-list --left-right main...@{upstream}
+#
+#      - name: Print log
+#        run: git log -2
+#
+##      - name: fetch
+##        run: git fetch
+#
+##      - name: update git
+##        run: |
+##          git reset --hard HEAD
+##          git pull
+#
+#      - name: Sleep for 30 seconds
+#        uses: jakejarvis/wait-action@master
+#        with:
+#          time: '30s'
+#
+#      - name: Test ahead
+#        run: git rev-list --left-right main...@{upstream}
+#
+#      - name: Print log
+#        run: git log -2
+#
+#      - name: current has
+#        run: git rev-parse HEAD
