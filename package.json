@@ -1,6 +1,6 @@
 {
   "name": "gh-push-protected",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "main": "index.js",
   "repository": "git@github.com:mdeoliveira-hw/gh-push-protected.git",
   "author": "Maxime <maxime@happywait.com>",
