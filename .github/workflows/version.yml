@@ -69,8 +69,8 @@ jobs:
       - name: Print log
         run: git log -2
 
-      - name: fetch
-        run: git fetch
+#      - name: fetch
+#        run: git fetch
 
 #      - name: update git
 #        run: |
@@ -80,7 +80,7 @@ jobs:
       - name: Sleep for 30 seconds
         uses: jakejarvis/wait-action@master
         with:
-          time: '3s'
+          time: '10s'
 
       - name: Test ahead
         run: git rev-list --left-right main...@{upstream}
