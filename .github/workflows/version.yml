@@ -65,6 +65,9 @@ jobs:
       - name: Print log
         run: git log -2
 
+      - name: fetch
+        run: git fetch --all
+
 #      - name: update git
 #        run: |
 #          git reset --hard HEAD
